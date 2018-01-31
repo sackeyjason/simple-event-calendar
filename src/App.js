@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import WeekCalendar from './containers/WeekCalendar';
+
+function getLatestStartDay(d) {
+  // Find most recent Monday before/on date d.
+  let e = d;
+  let distanceFromMonday;
+  if (d.getDay() > 0) {
+    distanceFromMonday = d.getDay() - 1;
+  } else {
+    distanceFromMonday = 6;
+  }
+  e.setDate(d.getDate() - distanceFromMonday);
+  return e;
+}
 
 class App extends Component {
   render() {
+    let startDate = getLatestStartDay(new Date());
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1>Events</h1>
+        <WeekCalendar
+          start={startDate}
+        />
       </div>
     );
   }
